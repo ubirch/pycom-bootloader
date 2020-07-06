@@ -1,4 +1,4 @@
-print("SD boot loader")
+print("SD bootloader")
 
 import pycom
 import time
@@ -17,11 +17,11 @@ def mount_sd():
 
 ### Main Code ###
 pycom.heartbeat(False)
-pycom.rgbled(0x7f0000) # red        
+pycom.rgbled(0x060000) # red
 
 if mount_sd():
     print("booting from SD")
-    pycom.rgbled(0x050505) # white
+    pycom.rgbled(0x030303) # white
     #add code and lib dir on sd to import path
     sys.path.append('/sd/code')
     sys.path.append('/sd/code/lib')
