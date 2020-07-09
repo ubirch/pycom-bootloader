@@ -6,6 +6,10 @@ import machine
 import sys
 import uos
 
+#paths for the code/lib/mount locations
+SD_MOUNTPOINT = '/sd'
+CODE_PATH = '/sd/code'
+LIB_PATH = '/sd/code/lib'
 
 #LED colors
 #for errors (full brightness)
@@ -21,7 +25,7 @@ C_RED_DIM = 0x060000
 def mount_sd():
     try:
         sd = machine.SD()
-        os.mount(sd, '/sd')
+        os.mount(sd, SD_MOUNTPOINT)
         return True
     except OSError:
         return False
@@ -41,14 +45,17 @@ pycom.rgbled(C_RED_DIM)
 if mount_sd():
     print("booting from SD")
     pycom.rgbled(C_WHITE_DIM) 
+    
     #add code and lib dir on sd to import path
-    sys.path.append('/sd/code')
-    sys.path.append('/sd/code/lib')
+    sys.path.append(CODE_PATH)
+    sys.path.append(LIB_PATH)
+
     #change working dir to code directory
     try:
-        uos.chdir('/sd/code')
+        uos.chdir(CODE_PATH)
     except Exception:
-        print("code folder not found")
+        print("could not change to code folder:")
+        print(CODE_PATH)
         endless_blink(C_PURPLE,C_RED)
 
     print("sys.path:")
@@ -56,8 +63,9 @@ if mount_sd():
     print("uos.getcwd():")
     print(uos.getcwd())
 
+    #execute code from SD
     try:
-        execfile('/sd/code/main.py')
+        execfile('main.py')
     except Exception:
         print("could not execute main.py")
         endless_blink(C_BLUE,C_RED)
