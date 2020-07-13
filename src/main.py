@@ -8,8 +8,8 @@ import uos
 
 #paths for the code/lib/mount locations
 SD_MOUNTPOINT = '/sd'
-CODE_PATH = '/sd/code'
-LIB_PATH = '/sd/code/lib'
+CODE_PATH = '/sd/src'
+LIB_PATH = '/sd/src/lib'
 
 #LED colors
 #for errors (full brightness)
